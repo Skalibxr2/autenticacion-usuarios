@@ -2,6 +2,7 @@ package com.edutech.autenticacion.controller;
 
 import com.edutech.autenticacion.model.Usuario;
 import com.edutech.autenticacion.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,9 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario crearUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.crear(usuario);
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario) {
+        Usuario creado = usuarioService.crear(usuario);
+        return ResponseEntity.ok(creado);
     }
 
     @PutMapping("/{id}")

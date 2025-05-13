@@ -1,6 +1,7 @@
 package com.edutech.autenticacion.service;
 
 import com.edutech.autenticacion.model.Usuario;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import com.edutech.autenticacion.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     public List<Usuario> obtenerTodos() {
         return usuarioRepository.findAll();
@@ -26,6 +30,7 @@ public class UsuarioService {
     }
 
     public Usuario crear(Usuario usuario) {
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         return usuarioRepository.save(usuario);
     }
 
